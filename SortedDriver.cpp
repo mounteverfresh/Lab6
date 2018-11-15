@@ -88,11 +88,11 @@ mostIsolated(vector<double> & number)
 			gDiff = number[i + 1] - number[i];
 			iso = i;
 		}
-		else if (i == (number.size() - 1) )
+		else if (i == (number.size() - 1))
 		{
-			if ( (number[i] - number[i-1]) > gDiff)
+			if ((number[i] - number[i - 1]) > gDiff)
 			{
-				gDiff = number[i] - number[i-1];
+				gDiff = number[i] - number[i - 1];
 				iso = i;
 			}
 		}
@@ -101,19 +101,19 @@ mostIsolated(vector<double> & number)
 			int nearest = 0; //vector position of nearest element
 			double spaceB = number[i] - number[i - 1]; //space before
 			double spaceF = number[i + 1] - number[i]; //space following
-			
-			if (spaceB > spaceF){ nearest = i + 1; }			
+
+			if (spaceB > spaceF) { nearest = i + 1; }
 			else { nearest = i - 1; }
 
 			double absolute = abs(number[i] - number[nearest]);
-			if ( (absolute > gDiff) || ( iso == nearest && prevDiff < spaceF )  )
+			if ((absolute > gDiff) || (iso == nearest && prevDiff < spaceF))
 			{
 				iso = i;
 				prevDiff = spaceB;
-				gDiff = abs(number[i] - number[nearest]);	
+				gDiff = abs(number[i] - number[nearest]);
 			}
 
-			
+
 		}
 	}
 
@@ -131,22 +131,24 @@ unmatched(list<string> & A, list<string> & B)
 	B.sort();
 
 	std::list<string>::iterator iterA = A.begin();
-
+	std::list<string>::iterator iterB = B.begin();
 	int unmatched = 0;
-	while(iterA != A.end())
+	while (iterA != A.end())
 	{
-		std::list<string>::iterator iterB = B.begin();
 		boolean found = false;
-		while (*iterA >= *iterB)
+		while (iterB != B.end() && *iterA >= *iterB && !found)
 		{
 			if (*iterA == *iterB)
 			{
 				found = true;
 			}
 			iterB++;
-		}		
-		iterA++;
+		}
+
 		if (!found) { unmatched++; }
+		iterA++;
+		iterB--;
+		
 	}
 
 	return unmatched;
